@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>การ์ดของเรา 💖</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+    text-align: center;
+}
+
+.card-box {
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(12px);
+    border-radius: 28px;
+    padding: 35px 25px 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+button {
+    font-size: 22px;
+    padding: 14px 28px;
+    border-radius: 40px;
+    border: none;
+    cursor: pointer;
+}
+
+.open-btn,
+.btn-yes {
+    background: linear-gradient(135deg, #ff5f8f, #ff85a2);
+    color: white;
+    font-weight: bold;
+}
+
+.btn-no {
+    background: #e0e0e0;
+    color: #555;
+    font-weight: bold;
+}
+
+.card { display: none; }
+
+.text-main {
+    font-size: 30px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ff5f8f, #ff8fab);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 18px;
+}
+
+.text-sub {
+    font-size: 24px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 32px;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+
+.gif-section {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gif-section img {
+    max-width: 90%;
+    border-radius: 22px;
+    margin-bottom: 22px;
+}
+
+.final-text {
+    font-size: 30px;
+    font-weight: 800;
+    color: #d6336c;
+}
+</style>
+</head>
+
+<body>
+
+<!-- หน้าเริ่มต้น -->
+<div class="container" id="start">
+    <div class="card-box">
+        <button class="open-btn" onclick="openCard()">กดเปิดการ์ด 💌</button>
+    </div>
+</div>
+
+<!-- หน้าการ์ด -->
+<div class="container card" id="card">
+    <div class="card-box">
+        <div class="text-main">ชอบนะคับ 💗</div>
+        <div class="text-sub">อยากให้แกเป็นคนพิเศษของเราได้มั้ย</div>
+
+        <div class="btn-group">
+            <button class="btn-yes" onclick="yesClick()">ได้</button>
+            <button class="btn-no" id="noBtn">ไม่ได้</button>
+        </div>
+    </div>
+</div>
+
+<!-- หน้า GIF -->
+<div class="container gif-section" id="gifSection">
+    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHJpZzRnd3B6YjRnd3B6YjRnd3B6YjRnd3B6YjRnd3B6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/KztT2c4u8mYYUiMKdJ/giphy.gif">
+    <div class="final-text">น่ารักที่สุดดดเลยอ้วน 💕</div>
+</div>
+
+<script>
+const noBtn = document.getElementById('noBtn');
+let activated = false;
+
+function openCard() {
+    document.getElementById('start').style.display = 'none';
+    document.getElementById('card').style.display = 'block';
+}
+
+function yesClick() {
+    // ซ่อนการ์ด
+    document.getElementById('card').style.display = 'none';
+
+    // ซ่อนปุ่ม "ไม่ได้" ไม่ให้มาบัง
+    noBtn.style.display = 'none';
+
+    // แสดงหน้า GIF
+    document.getElementById('gifSection').style.display = 'flex';
+}
+
+function moveNoButton() {
+    // ครั้งแรกที่หนี: แปลงเป็น fixed และคงตำแหน่งเดิม
+    if (!activated) {
+        const rect = noBtn.getBoundingClientRect();
+        document.body.appendChild(noBtn);
+        noBtn.style.position = 'fixed';
+        noBtn.style.left = rect.left + 'px';
+        noBtn.style.top = rect.top + 'px';
+        activated = true;
+    }
+
+    const padding = 20;
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
+
+    noBtn.style.left = x + 'px';
+    noBtn.style.top = y + 'px';
+}
+
+// หนีตอนจะกดเท่านั้น
+noBtn.addEventListener('mouseenter', moveNoButton);
+noBtn.addEventListener('touchstart', moveNoButton);
+</script>
+
+</body>
+</html>
